@@ -2,6 +2,7 @@ package main;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
@@ -10,6 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.border.TitledBorder;
 import java.awt.FlowLayout;
+import javax.swing.JFormattedTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CanTool {
 
@@ -53,15 +57,18 @@ public class CanTool {
 		frmCantoolapp.getContentPane().add(tabbedPane_1);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		tabbedPane_1.addTab("\u8BBE\u7F6ECOM\u53E3", null, panel_1, null);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane_1.addTab("\u8BBE\u7F6E\u88C5\u7F6E", null, panel_2, null);
 		
 		JPanel panel_3 = new JPanel();
-		tabbedPane_1.addTab("\u63A5\u6536CAN\u4FE1\u606F", null, panel_3, null);
-		
-		JPanel panel_4 = new JPanel();
-		tabbedPane_1.addTab("\u53D1\u9001CAN\u4FE1\u606F", null, panel_4, null);
+		FlowLayout flowLayout = (FlowLayout) panel_3.getLayout();
+		tabbedPane_1.addTab("\u63A5\u6536\u53D1\u9001CAN\u4FE1\u606F", null, panel_3, null);
 	}
 }
