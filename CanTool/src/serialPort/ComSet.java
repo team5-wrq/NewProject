@@ -10,6 +10,10 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import java.awt.Font;
+import java.awt.Window;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 public class ComSet {
@@ -119,6 +123,12 @@ public class ComSet {
 		panel.add(btnNewButton);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frmcom.setVisible(false);
+			}
+		});
 		btnCancel.setFont(new Font("Calibri", Font.PLAIN, 20));
 		btnCancel.setBounds(437, 275, 97, 29);
 		panel.add(btnCancel);
