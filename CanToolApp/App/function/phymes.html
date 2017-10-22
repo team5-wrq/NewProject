@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<style>
+	a{text-decoration: none;}
+</style>
+
+<title>treeview</title>
+
+<link rel="stylesheet" href="css/jquery.treeview.css" />
+
+<script src="js/jquery-1.8.0.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/jquery.treeview.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+		$(function() {
+			$("#tree").treeview({
+				collapsed: true,
+				animated: "medium",
+				control:"#sidetreecontrol",
+				persist: "location"
+			});
+		})
+
+	</script>
+
+</head>
+<body>
+
+
+<div id="sidetree">
+
+<ul id="tree">
+
+	<li><strong><a href="">Predefined events</a></strong>
+
+	<ul>
+		
+		<li><a href="">CAN</a>
+		<ul>
+			
+			<li><a href="">Events</a>
+			<ul>
+				<li><a href="">Errorframe</a></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+
+	</ul>
+
+	</li>
+	<li><strong><a href="">Bus...</a></strong>
+	<ul>
+		<li><a href="">CAN</a>
+		<ul>
+			<li><a href="">CAN</a></li>
+		</ul>
+		</li>
+
+	</ul>
+	</li>
+	<li><strong><a href="">PTC...</a></strong>
+
+	<ul>
+		<li><a href="">Singals</a>
+		<ul>
+			<li><a href="">Messages</a></li>
+		</ul>
+		</li>
+		<li><a href="">BMS...</a>
+		<ul>
+			<li><a href="">PTC...</a></li>
+		</ul>
+		</li>
+
+
+		<li><a href="">Nodes</a>
+		<ul>
+			<li><a href="">Message</a></li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+
+</ul>
+
+</div>
+
+</body>
+
+</html>
