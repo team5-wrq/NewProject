@@ -65,6 +65,7 @@ public class SerialTool {
 		return portNameList;
 	}
 	
+	//返回端口
 	public Enumeration<CommPortIdentifier> getPostList(){
 		//Enumeration<CommPortIdentifier> portList = CommPortIdentifier.getPortIdentifiers();
 		//System.out.println(portList);
@@ -94,7 +95,7 @@ public class SerialTool {
                 	throw new SerialPortParameterFailure();
                 }
                 
-                //System.out.println("Open " + portName + " sucessfully !");
+                System.out.println("Open " + portName + " sucessfully !");
                 return serialPort;
             
             }        
@@ -135,7 +136,7 @@ public class SerialTool {
 	    }
 	
  
-	 
+	//从端口读数据 
 	public byte[] readFromPort(SerialPort serialPort) throws ReadDataFromSerialPortFailure, SerialPortInputStreamCloseFailure {
 
     	InputStream in = null;

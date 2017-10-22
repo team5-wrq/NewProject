@@ -100,10 +100,11 @@ public class ComSet extends SerialTool{
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(201, 87, 109, 27);
 		panel.add(comboBox_1);
+		comboBox_1.addItem("9600");
 		comboBox_1.addItem("1500");
 		comboBox_1.addItem("2400");
 		comboBox_1.addItem("4800");
-		comboBox_1.addItem("9600");
+	//  comboBox_1.addItem("9600");
 		comboBox_1.addItem("14400");
 		comboBox_1.addItem("19500");
 		comboBox_1.addItem("115500");
@@ -145,6 +146,16 @@ public class ComSet extends SerialTool{
 		
 		JButton btnNewButton = new JButton("OK");
 		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				serialPort.SendRecive window = new serialPort.SendRecive();
+				window.setVisible(true);
+				frmcom.setVisible(false);
+				
+			}
+		});
+		/*
+		btnNewButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				frmcom.setVisible(false);	
 				
@@ -152,23 +163,36 @@ public class ComSet extends SerialTool{
 				byte[] data1=null;
 				try{
 					tool.openPort("COM2",9600);
-					if(serialPort==null){
-						System.out.println("没有发现端口！");
-					}
-					else{
-						System.out.println(serialPort.toString());
-						data = tool.readFromPort(serialPort);
-						receive_data=new String(data,"UTF-8");
-						//Main.stringBuffer.append(receive_data+'\n');
-                        System.out.println(receive_data);	
-					}
+					System.out.println(serialPort.toString());
+					data = tool.readFromPort(serialPort);
+					receive_data=new String(data,"UTF-8");
+					System.out.println(receive_data);
 				}catch(Exception e1){
 					System.exit(0);
 				}
+				
+				
+				//try{
+				//	tool.openPort("COM2",9600);
+				//	if(serialPort==null){
+				//		System.out.println("没有发现端口！");
+				//	}
+				//	else{
+				//		System.out.println(serialPort.toString());
+				//		data = tool.readFromPort(serialPort);
+				//		receive_data=new String(data,"UTF-8");
+				//		//Main.stringBuffer.append(receive_data+'\n');
+                //        System.out.println(receive_data);	
+				//	}
+				//}catch(Exception e1){
+				//	System.exit(0);
+				//}
+				
 				//byte[] bytes = tool.readFromPort("COM2");
 				//System.out.println();
 			}
 		});
+		*/
 		btnNewButton.setFont(new Font("Calibri", Font.PLAIN, 20));
 		btnNewButton.setBounds(296, 275, 97, 29);
 		panel.add(btnNewButton);

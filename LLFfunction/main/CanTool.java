@@ -58,17 +58,24 @@ public class CanTool {
 		
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.setBounds(15, 15, 700, 530);
-		frmCantoolapp.getContentPane().add(tabbedPane_1);
-	
-		JPanel panel_1 = new JPanel();
-		panel_1.addMouseListener(new MouseAdapter() {
+		tabbedPane_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				serialPort.ComSet window = new serialPort.ComSet();
 				window.frmcom.setVisible(true);	
 			}
 		});
+		frmCantoolapp.getContentPane().add(tabbedPane_1);
 	
+		JPanel panel_1 = new JPanel();
+		/*panel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				serialPort.ComSet window = new serialPort.ComSet();
+				window.frmcom.setVisible(true);	
+			}
+		});
+	    */
 		tabbedPane_1.addTab("\u8BBE\u7F6ECOM\u53E3", null,panel_1, null);
 		
 		
