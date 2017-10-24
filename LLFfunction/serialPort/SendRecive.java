@@ -6,10 +6,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import serialException.NoSuchPort;
+import serialException.NotASerialPort;
+import serialException.PortInUse;
+import serialException.ReadDataFromSerialPortFailure;
+import serialException.SerialPortInputStreamCloseFailure;
+import serialException.SerialPortParameterFailure;
+
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.TextArea;
+
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -17,7 +27,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 
 public class SendRecive extends JFrame {
-
+    
+	SerialTool serialTool = new SerialTool();
 	private JPanel contentPane;
 
 	/**
@@ -63,6 +74,30 @@ public class SendRecive extends JFrame {
 		textArea.setBounds(56, 61, 625, 152);
 		contentPane.add(textArea);
 		textArea.setLineWrap(true);
+		
+		try {
+			byte[] str1 = serialTool.readFromPort(serialTool.openPort("COM2",9600));
+			textArea.setText(String.valueOf(str1));
+		} catch (ReadDataFromSerialPortFailure e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SerialPortInputStreamCloseFailure e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SerialPortParameterFailure e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NotASerialPort e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchPort e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (PortInUse e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//textArea.setText(str1);
 		
 		
 		JTextArea textArea_1 = new JTextArea();

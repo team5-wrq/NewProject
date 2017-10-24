@@ -30,7 +30,7 @@ public class SerialTool {
 		this.serialPort=serialPort;
 	}
 	
-	private static Enumeration<CommPortIdentifier> portList=null;
+	//private static Enumeration<CommPortIdentifier> portList=null;
 	static{
 		//被加载时初始化一个对象
 		if(serialTool == null){
@@ -51,27 +51,20 @@ public class SerialTool {
 	}
 	
 	//查找所有可用端口，返回可用端口名称列表
-	public static final ArrayList<String> findPort(){
+	public static final Enumeration<CommPortIdentifier> findPort(){
 		//获得当前可用的串口
-		portList = CommPortIdentifier.getPortIdentifiers();
-		ArrayList<String> portNameList = new ArrayList<>();
-		//将可用的串口名添加到List,并返回该List
-		while(portList.hasMoreElements()){
-			String portName = portList.nextElement().getName();
-			portNameList.add(portName);
-			//System.out.println(portName);
-			
-		}
-		return portNameList;
+		Enumeration<CommPortIdentifier> portList = CommPortIdentifier.getPortIdentifiers();	
+        
+        return portList;
 	}
 	
 	//返回端口
-	public Enumeration<CommPortIdentifier> getPostList(){
+	/*public Enumeration<CommPortIdentifier> getPostList(){
 		//Enumeration<CommPortIdentifier> portList = CommPortIdentifier.getPortIdentifiers();
 		//System.out.println(portList);
 		return  (Enumeration<CommPortIdentifier>) portList;
 		
-	}
+	}*/
 	
 	//打开串口
 	public final SerialPort openPort(String portName,int baudrate) throws SerialPortParameterFailure, NotASerialPort, NoSuchPort, PortInUse{
@@ -138,7 +131,7 @@ public class SerialTool {
  
 	//从端口读数据 
 	public byte[] readFromPort(SerialPort serialPort) throws ReadDataFromSerialPortFailure, SerialPortInputStreamCloseFailure {
-
+		System.out.println("reading...");
     	InputStream in = null;
         byte[] bytes = null;
 

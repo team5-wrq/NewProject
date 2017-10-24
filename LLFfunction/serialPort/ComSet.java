@@ -10,13 +10,29 @@ import javax.swing.JTextArea;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
 
+import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEventListener;
+import serialException.NoSuchPort;
+import serialException.NotASerialPort;
+import serialException.PortInUse;
+import serialException.ReadDataFromSerialPortFailure;
+import serialException.SendDataToSerialPortFailure;
+import serialException.SerialPortInputStreamCloseFailure;
+import serialException.SerialPortOutputStreamCloseFailure;
+import serialException.SerialPortParameterFailure;
+import serialException.TooManyListeners;
+
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import java.awt.Font;
+import java.awt.List;
 import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.swing.JButton;
 
@@ -67,10 +83,19 @@ public class ComSet extends SerialTool{
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(56, 72, 303, 32);
 		frmcom.getContentPane().add(comboBox);
-		comboBox.addItem(tool.findPort().get(0));
-		comboBox.addItem(tool.findPort().get(1));
-		comboBox.addItem(tool.findPort().get(2));
-		comboBox.addItem(tool.findPort().get(3));
+		Enumeration<CommPortIdentifier> portList=tool.findPort();
+		ArrayList<String> portNameList = new ArrayList<>();
+
+        //将可用串口名添加到List并返回该List
+        while (portList.hasMoreElements()) {
+            String portName = portList.nextElement().getName();
+            portNameList.add(portName);
+            comboBox.addItem(portName);
+        }
+		
+		//comboBox.addItem(tool.findPort().get(1));
+		//comboBox.addItem(tool.findPort().get(2));
+		//comboBox.addItem(tool.findPort().get(3));
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(56, 128, 637, 319);
@@ -148,9 +173,42 @@ public class ComSet extends SerialTool{
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				serialPort.SendRecive window = new serialPort.SendRecive();
-				window.setVisible(true);
-				frmcom.setVisible(false);
+				try {
+					SerialPort serialPort = tool.openPort("COM2", 9600);
+					//SerialPortEventListener listener=new SerialPortEventListener();
+					try {
+						
+						tool.addListener(serialPort, new SerialListener(tool,serialPort));
+						byte [] k={1,1,1,1,1,1,};
+						try {
+							tool.sendToPort(serialPort, k);
+						} catch (SendDataToSerialPortFailure e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (SerialPortOutputStreamCloseFailure e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} catch (TooManyListeners e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+				} catch (SerialPortParameterFailure e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NotASerialPort e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (NoSuchPort e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (PortInUse e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//SendRecive window = new SendRecive();
+				//window.setVisible(true);
+				//frmcom.setVisible(false);
 				
 			}
 		});
