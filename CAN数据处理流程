@@ -1,0 +1,84 @@
+首先数据进来的样式是：
+t31D80100000000000000
+t320880478C2F05A1D29A
+
+这种，然后把它的ID、L、DATA分开，用的方法是：
+（在Main.java里，第52行-第82行）
+这里是把一条数据比如t320880478C2F05A1D29A看做一个char[]数组（按行读，然后转成char[]数组）来处理。
+if(adata[0]=='t'){
+			for(int a=0;a<3;a++){
+				messageID[a] = adata[a+1];
+			}
+			//System.out.println(messageID);
+			messageL = Integer.valueOf(adata[4]) - 48;
+			//System.out.println(messageL);
+			for(int b=0;b<messageL*2;b++){
+				messageData[b] = adata[b+5];
+			}
+			//System.out.println(messageData);
+		}else{
+			for(int a=0;a<8;a++){
+				messageID[a] = adata[a+1];
+			}
+			System.out.println(messageID);
+			messageL = Integer.valueOf(adata[9]) - 48;
+		    System.out.println(messageL);
+			for(int b=0;b<messageL*2;b++){
+				messageData[b] = adata[b+10];
+			}
+			System.out.println(messageData);
+		}
+然后取到了messageID、messageL、messageData（JAVA里建了一个message对象，（github上的Message.java）但是我不知道h5里怎么用这个对象）
+但是这里的messageID还是char[]数组，把它转成字符串（hexString），再把它从16进制转成10进制的，（github上的HexToDecimal.java），方法如下：
+Integer.parseInt(hexString,16)
+这里的messageData也是char[]数组，把它转成字符串（hexString），再把它从十六进制转成2进制的，后面会需要用到。（github上的HexToBinary.java），方法如下：
+public char[] hex2Binary(){
+		if (hexString == null || hexString.length() % 2 != 0)  
+			return null;  
+	    String bString = "", tmp;  
+	    for (int i = 0; i < hexString.length(); i++)  
+	    {  
+	        tmp = "0000"  
+	                    + Integer.toBinaryString(Integer.parseInt(hexString  
+	                            .substring(i, i + 1), 16));  
+	        bString += tmp.substring(tmp.length() - 4);  
+	    }  
+	    return bString.toCharArray();  
+}
+
+现在就有了真正的messageID，就可以通过messageID去CANSignalJSON.json文件里找有着同样的MessageId的SG对象。（如果json用不了，后台还有其他方式去找，json用不了的情况你再问我吧，比较麻烦）
+这是json文件里的一个对象：
+{"SG":" SG_","MessageId":856,"SignalName":"CDU_HVACOffButtonSt","startPos":0,"bitLength":1,"bitFormat":"0+","A":1.0,"B":0.0,"C":0.0,"D":1.0,"unit":"","NodeName":"HVAC"}
+如果messageID对上了，说明这个SG代表的CAN信号是我们需要在界面上显示的。
+
+每个CAN信号里都有startPos、bitLength、bitFormat、A、B，这是计算物理值（也就是最终显示在界面上的值）需要用的。
+公式是：phy=A*x+B
+这个公式里A、B可以直接从SG里取到，重点就是算x，
+要通过上面取到的messageData（用char[]数组格式）算x，（在github上PhyValue.java的第24行到43行）（用StartPos和BitLength能在messageData里取到对应的2进制串，然后把2进制串转化为10进制的）
+char[] charData=messageData.toCharArray();
+		//System.out.println(charData[11]);
+		char[] charX=new char[canSig.getBitLength()];
+		//System.out.println(canSig.getStartPos());
+		//System.out.println(canSig.getBitLength());
+		int j=0;
+		String bitFormat=String.valueOf(canSig.getBitFormat());
+		//System.out.println(String.valueOf(canSig.getBitFormat()));
+		if(bitFormat.contains("0+")){
+			for(int i=canSig.getStartPos();i<=canSig.getStartPos()+canSig.getBitLength()-1;i++){
+				charX[j]=charData[i];
+				j++;
+			}
+		}else{
+			for(int i=canSig.getStartPos();i<=canSig.getStartPos()+canSig.getBitLength()-1;i++){
+				charX[canSig.getBitLength()-j-1]=charData[i];
+				j++;
+				
+			}
+		}
+
+String binaryStr=String.valueOf(charX);
+		int intX=Integer.parseInt(binaryStr, 2);   //十进制的
+
+现在x算出来了，再运用公式得到phy，
+phyValue=canSig.getA()*intX+canSig.getB();
+这就是要显示在界面上的值，对应的SG里也有SignalName，也要显示在界面上说明这个物理值的意义。
