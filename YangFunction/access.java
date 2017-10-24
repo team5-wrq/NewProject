@@ -13,7 +13,7 @@ public class access
 			@Override
 			public void run() 
 			{
-				ActionFrame frame = new ActionFrame();
+				JFrame frame = new MouseFrame();
 				frame.setTitle("test");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
