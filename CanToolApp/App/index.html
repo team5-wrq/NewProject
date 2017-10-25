@@ -16,12 +16,56 @@
 	
 	<!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	
+
 	<!-- jQuery and Plugin-->
 	<script src="js/jquery-3.2.1.min.js"></script>
 	
 	
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		function ConSuc()
+		{
+			var butcon = document.getElementById("butcom");
+			alert("正在连接...waiting");
+			alert("连接成功")
+			butcon.disabled = "disabled";
+			butcon.innerHTML= "连接成功";
+		}
+
+		function SendSuc()
+		{
+			var sectval = document.getElementById("sect").value;
+			var messval = document.getElementById("mess").value;
+			var butcon = document.getElementById("butcom").innerHTML;
+			if(butcon == 'COM口连接')
+			{
+				alert("COM口未连接");
+				return false;
+			}
+			if(!sectval || !messval)
+			{
+				alert("物理发送信息填写不完整");
+				return false;
+			}else {
+				alert("发送成功");
+			}
+		}
+
+		function TestCon(t)
+		{
+			var butcon = document.getElementById("butcom").innerHTML;
+			if(butcon == 'COM口连接')
+			{
+				alert("COM口未连接");
+				return false;
+			}else {
+				if(t == 1) window.open("function/tableshow.html");
+				if(t == 2) window.open("function/curve.html");
+				if(t == 3) window.open("function/panel.html");
+				if(t == 4) window.open("function/tree.html");
+			}
+		}
+	</script>
 
 </head>
 <body>
@@ -32,14 +76,14 @@
 				<div class="header-text">
 					<div class="header-text-inner">
 						<div class="logo">
-							<a href="index.html"><img src="images/logo.png" class="img-responsive" alt=""></a>
+							<a><img src="images/logo.png" class="img-responsive" alt=""></a>
+							<p id="testcom" class="cominterface" style="font-weight: bold;"><button onclick="ConSuc()" id="butcom" class="btn btn-skin" style="margin-top: 10%;">COM口连接</button></p>
 						</div>
 					</div>
 				</div><!-- /header-text -->
 			</div>
 		</div>
 	</header>
-	<!-- /Section: intro -->
 	
 	<!-- /////////////////////////////////////////Content -->
 	<div id="page-content">
@@ -60,7 +104,7 @@
 									</div>
 									<div class="project-social">
 										<ul class="list-inline">
-											<li><a href="function/tableshow.html" target="_blank"><i class="fa fa-link"></i></a></li>
+											<li><a onclick="TestCon(1);" href="#"><i class="fa fa-link"></i></a></li>
 										</ul>
 									</div>
 								</div>
@@ -80,7 +124,7 @@
 									</div>
 									<div class="project-social">
 										<ul class="list-inline">
-											<li><a href="function/curve.html" target="_blank"><i class="fa fa-link"></i></a></li>
+											<li><a onclick="TestCon(2);" href="#" ><i class="fa fa-link"></i></a></li>
 										</ul>
 									</div>
 								</div>
@@ -100,7 +144,7 @@
 									</div>
 									<div class="project-social">
 										<ul class="list-inline">
-											<li><a href="function/panel.html" target="_blank"><i class="fa fa-link"></i></a></li>
+											<li><a onclick="TestCon(3);" href="#" ><i class="fa fa-link"></i></a></li>
 										</ul>
 									</div>
 								</div>
@@ -120,7 +164,7 @@
 									</div>
 									<div class="project-social">
 										<ul class="list-inline">
-											<li><a href="function/tree.html" target="_blank"><i class="fa fa-link"></i></a></li>
+											<li><a onclick="TestCon(4);" href="#"><i class="fa fa-link"></i></a></li>
 										</ul>
 									</div>
 								</div>
@@ -135,35 +179,48 @@
 			<div class="container">
 				<div class="row heading light bold">
 					<div class="col-lg-12">	
-						<h2>信息发送</h2>
+						<h2>物理信息发送</h2>
 					</div>
 				</div>
 				<div class="row">
 					<div class="">
-						<p>物理信息的发送</p>
 						<form name="form1" method="post" action="#">
 							<div class="row">
 								<div style="margin-left: 38%;">
 								<div class="">
 									<div class="form-group">
-										<input type="text" name="name" disabled="disabled" placeholder="CanTool" style="width: 100px" />
+										<select id="sect" class="form-control" style="width: 150px; height: 45px;">
+											<option value="" disabled selected>Choose your Id</option>
+											<option value="800">800</option>
+											<option value="801">801</option>
+											<option value="797">797</option>
+											<option value="864">864</option>
+											<option value="867">867</option>
+											<option value="61">61</option>
+											<option value="1067">1067</option>
+											<option value="1056">1056</option>
+											<option value="792">792</option>
+											<option value="837">837</option>
+											<option value="915">915</option>
+											<option value="868">868</option>
+										</select>
 									</div>
 								</div>
 
 								<div class="">
 									<div class="form-group">
-										<input type="text" name="subject" placeholder="Send Message" style="width: 150px" required="required" />
+										<input id="mess" type="text" name="message" placeholder="Send Message" style="width: 150px" />
 									</div>
 								</div>
 								<div class="">
 									<div class="form-group">
-										<textarea name="message" placeholder="Send Description" style="min-height: 50px; min-width: 200px; width: 300px; height: 70px;"></textarea>
+										<textarea id="desc" name="description" placeholder="Send Description" style="min-height: 50px; min-width: 200px; width: 300px; height: 70px;"></textarea>
 									</div>
 								</div>
 								</div>
 								<div class="">
 									<div class="form-group">
-										<button name="submitcontact" class="btn btn-skin" type="submit">发送</button>
+										<button name="submitcontact" onclick="SendSuc()" class="btn btn-skin" type="submit">发送</button>
 									</div>
 								</div>
 							</div>										
@@ -205,39 +262,5 @@
 		</div> 
 	</footer>
 	<!-- Footer -->
-	
-	<!-- JS -->
-	<script src="js/lightbox-plus-jquery.min.js"></script>
-	<script src="js/plugin.js"></script>
-	<script src="js/main.js"></script>
-	
-	
-	
-	<!-- carousel -->
-	<script src="owl-carousel/owl.carousel.js"></script>
-    <script>
-		$(document).ready(function() {
-		  var b2_box = $(".b_2-slide");
-		  
-		  b2_box.owlCarousel({
-			autoPlay: false,
-			items : 1,
-			itemsDesktop : [1199,1],
-			itemsDesktopSmall : [979,1],
-			itemsTablet : [768, 1],
-			itemsMobile : [479, 1],
-			pagination: false
-		  });
-		  
-		  // Custom Navigation Events 1
-		  $(".next-b_2-slide").click(function(){
-			b2_box.trigger('owl.next');
-		  });
-		  $(".prev-b_2-slide").click(function(){
-			b2_box.trigger('owl.prev');
-		  });
-		  
-		});
-	</script>
 </body>
 </html>

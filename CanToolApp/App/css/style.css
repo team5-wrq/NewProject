@@ -52,6 +52,13 @@ input:not([type]), input[type="color"], input[type="email"], input[type="number"
     border: 2px solid #666;
 }
 
+select {
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+}
+
+select::-ms-expand { display: none; }
 .post{}
 .post:after, .post:before, article:after, article:before, section:after, section:before{clear: both; content: '\0020'; display: block; visibility: hidden; width: 0; height: 0;}
 .copyrights{
