@@ -23,21 +23,7 @@
 			 var map = [0,1,1,1,0,5,5,5,0,9,9,9,0,13,13,13];
 			//声明参数选项
 			var options = {openImg: "images/TreeTable/tv-collapsable.gif", shutImg: "images/TreeTable/tv-expandable.gif", leafImg: "images/TreeTable/tv-item.gif", lastOpenImg: "images/TreeTable/tv-collapsable-last.gif", lastShutImg: "images/TreeTable/tv-expandable-last.gif", lastLeafImg: "images/TreeTable/tv-item-last.gif", vertLineImg: "images/TreeTable/vertline.gif", blankImg: "images/TreeTable/blank.gif", collapse: false, column: 0, striped: true, highlight: true,  state:false};
-			/* 对于options中的各个参数，copy原作者的解释，有权威，不翻译了
-			openImg: Relative url of the image to use for an expanded parent node.
-			shutImg: Relative url of the image to use for a collapsed parent node.
-			leafImg: Relative url of the image to use for a child node.
-			lastOpenImg: Relative url of the image to use for the last expanded parent node. Required if using lines. If not set this to the same as openImg.
-			lastShutImg: Relative url of the image to use for the last collapsed parent node. Required if using lines. If not set this to the same as shutImg.
-			lastLeafImg: Relative url of the image to use for the last child node. Required if using lines. If not set this to the same as leafImg.
-			vertLineImg: Relative url of the image to use for the vertical lines. If not using lines, set this to the same as blankImg.
-			blankImg: Relative url of the image to use for the filler that creates the indenting.
-			collapse: An array of parent row numbers whose children are collapsed initially. Must be an array even if you only want one parent collapsed
-			column: A zero based index of the column you want to show the treetable effect in, i.e. first column is 0.
-			striped: Boolean indicating whether you want a striped effect. Set the colour in the css with an even class selector.
-			highlight: Boolean indicating whether you want a highlighting effect when hovering over the rows. Set the colour in the css with an over class selector.
-			state: Boolean indicating whether you want the collapsed state of each parent to be set in a cookie. Set this to false if there is likely to be a change in the relationshiop between the child nodes and their parents.
-			*/
+
 		   if(map!=null&&map.length>0)
 			{
 			  //根据参数显示树
